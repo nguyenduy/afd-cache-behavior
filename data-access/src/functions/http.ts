@@ -6,7 +6,7 @@ export async function apiHandler(request: HttpRequest, context: InvocationContex
   const url = new URL(request.url);
   const path = url.pathname.split("/").pop().toLowerCase();
 
-  if (path === "nocachehint") {
+  if (path === "nocachehint" || path === "cachecontrol") {
     return { body: new Date().toISOString() };
   } else if (path === "cachecontrolwithmaxage") {
     return {
@@ -23,7 +23,7 @@ export async function apiHandler(request: HttpRequest, context: InvocationContex
       },
     };
   } else {
-    return { status: 404, body: "Not Found" };
+    return { status: 404, body: "Path " + path + "Not Found" };
   }
 }
 
