@@ -1,37 +1,14 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 
 export async function apiHandler(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-  context.log(`Http function processed request for url "${request.url}"`);
-
-  const url = new URL(request.url);
-  const path = url.pathname.split("/").pop().toLowerCase();
-
-  if (path === "nocachehint" || path === "cachecontrol") {
-    return { body: new Date().toISOString() };
-  } else if (path === "maxage20") {
-    return {
-      body: new Date().toISOString(),
-      headers: {
-        "Cache-Control": "max-age=20",
-      },
-    };
-  } else if (path === "privatenostore") {
-    return {
-      body: new Date().toISOString(),
-      headers: {
-        "Cache-Control": "no-store, private",
-      },
-    };
-  } else {
-    return { status: 404, body: "Path " + path + "Not Found" };
-  }
+  return {
+    body: new Date().toISOString(),
+  };
 }
 
-
-
-app.http("cacheControl", {
+app.http("postapis", {
   methods: ["POST"],
-  route: "cacheControl/{*segments}",
+  route: "postapis/{*segments}",
   authLevel: "anonymous",
   handler: apiHandler,
 });
