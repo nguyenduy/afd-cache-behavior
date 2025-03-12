@@ -8,14 +8,14 @@ export async function apiHandler(request: HttpRequest, context: InvocationContex
 
   if (path === "nocachehint" || path === "cachecontrol") {
     return { body: new Date().toISOString() };
-  } else if (path === "cachecontrolwithmaxage") {
+  } else if (path === "maxage20") {
     return {
       body: new Date().toISOString(),
       headers: {
         "Cache-Control": "max-age=20",
       },
     };
-  } else if (path === "cachecontrolprivatenostore") {
+  } else if (path === "privatenostore") {
     return {
       body: new Date().toISOString(),
       headers: {
@@ -26,6 +26,8 @@ export async function apiHandler(request: HttpRequest, context: InvocationContex
     return { status: 404, body: "Path " + path + "Not Found" };
   }
 }
+
+
 
 app.http("cacheControl", {
   methods: ["POST"],
