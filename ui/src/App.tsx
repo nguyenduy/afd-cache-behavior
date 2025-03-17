@@ -1,46 +1,39 @@
-import { Col, Divider, Row } from "antd";
+import { Col, Row } from "antd";
 import "./App.css";
 import { ApiResult } from "./components/api-result";
 
 function App() {
-  const functionEndpointCacheEnabled = import.meta.env.VITE_FUNCTION_ENDPOINT_CACHE_ENABLED as string;
-  const functionEndpointCacheDisabled = import.meta.env.VITE_FUNCTION_ENDPOINT_CACHE_DISABLED as string;
+  const functionAppEndpoint = import.meta.env.VITE_FUNCTION_ENDPOINT as string;
+  const aFDCacheEnabledEndpoint = import.meta.env.VITE_AFD_ENDPOINT_CACHE_ENABLED as string;
+  const aFDCacheDisabledEndpoint = import.meta.env.VITE_AFD_ENDPOINT_CACHE_DISABLED as string;
 
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
       <Row>
-        <h1>Front Door with Cached Enabled</h1>
-        <br />
         <Row style={{ minHeight: "20vh", width: "100vw" }}>
-          <Col span={8}>
-            <h4>cache-control: private, no-store</h4>
-            <ApiResult uri={functionEndpointCacheEnabled + "/privatenostore"} />
+          <Col span={6}>
+            <div style={{ textAlign: "center", height: "50px" }}>
+              <h4>Directly to Function App</h4>
+            </div>
+            <ApiResult uri={functionAppEndpoint} />
           </Col>
-          <Col span={8}>
-            <h4>cache-control: maxAge=20</h4>
-            <ApiResult uri={functionEndpointCacheEnabled + "/maxage20"} />
+          <Col span={6}>
+            <div style={{ textAlign: "center", height: "50px" }}>
+              <h4>Through AFD with Cache enabled</h4>
+            </div>
+            <ApiResult uri={aFDCacheEnabledEndpoint} />
           </Col>
-          <Col span={8}>
-            <h4>no cache hint</h4>
-            <ApiResult uri={functionEndpointCacheEnabled + "/nocachehint"} />
+          <Col span={6}>
+            <div style={{ textAlign: "center", height: "50px" }}>
+              <h4>Through AFD with Cache disabled by a rule set</h4>
+            </div>
+            <ApiResult uri={aFDCacheEnabledEndpoint} cacheDisabledThroughRuleSet={true} />
           </Col>
-          <Divider />
-        </Row>
-
-        <h1>Front Door with Cached Disabled</h1>
-        <br />
-        <Row style={{ height: "50vh", width: "100vw" }}>
-          <Col span={8}>
-            <h4>cache-control: private, no-store</h4>
-            <ApiResult uri={functionEndpointCacheDisabled + "/privatenostore"} />
-          </Col>
-          <Col span={8}>
-            <h4>cache-control: maxAge=20</h4>
-            <ApiResult uri={functionEndpointCacheDisabled + "/maxage20"} />
-          </Col>
-          <Col span={8}>
-            <h4>no cache hint</h4>
-            <ApiResult uri={functionEndpointCacheDisabled + "/nocachehint"} />
+          <Col span={6}>
+            <div style={{ textAlign: "center", height: "50px" }}>
+              <h4>Through AFD with Cache Disabled</h4>
+            </div>
+            <ApiResult uri={aFDCacheDisabledEndpoint} />
           </Col>
         </Row>
       </Row>

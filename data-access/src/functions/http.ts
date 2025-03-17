@@ -6,9 +6,9 @@ export async function apiHandler(request: HttpRequest, context: InvocationContex
   };
 }
 
-app.http("postapis", {
+app.http("postapi", {
   methods: ["POST"],
-  route: "postapis/{*segments}",
+  route: "postapi/{*segments}",
   authLevel: "anonymous",
   handler: apiHandler,
 });
